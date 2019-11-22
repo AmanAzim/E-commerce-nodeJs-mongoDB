@@ -17,19 +17,21 @@ class  User {
     addToCart(product) {
         const db = getDB();
 
-        //const cartProduct = this.cart.items.findIndex( cartProduct => cartProduct._id ===product._id );
-        //if ( cartProduct ) {
+        const updatedCartItems = [...this.cart.items];
+        let newQuentity = 1;
+        console.log('updatedCartItems', updatedCartItems);
+        const cartProductIndex = this.cart.items.findIndex(
+            cartProduct => cartProduct.productId.toString() === product._id.toString()
+        );
 
-        //}
+        if ( cartProductIndex >= 0 ) {
+            newQuentity = this.cart.items[cartProductIndex].quentity + 1;
+            updatedCartItems[cartProductIndex].quentity = newQuentity;
+        } else {
+            updatedCartItems.push({ productId: new mongoDB.ObjectID(product._id), quentity: newQuentity });
+        }
 
-        const updatedCart = {
-            items: [
-                {
-                    productId: new mongoDB.ObjectID(product._id),
-                    quentity: 1
-                }
-            ]
-        };
+        const updatedCart = { items: updatedCartItems };
         return db.collection('users').updateOne(
                 { _id: new mongoDB.ObjectID(this.userId) },
                 { $set: { cart: updatedCart }, //just update the cart

@@ -46,7 +46,7 @@ exports.postCart = (req, res, next) => {
         .then( product => {
             return req.user.addToCart(product);
         })
-        .then( result => console.log(result))
+        .then( result => result )
         .catch(err => console.log(err));
     res.redirect('/products-list');
 };
