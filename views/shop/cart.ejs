@@ -7,14 +7,18 @@
             <ul>
                 <% cartProductsInfo.forEach( productInfo => { %>
                     <li>
-                        <p><%= productInfo.product.title %> (<%= productInfo.quentity %>)</p>
+                        <p><%= productInfo.title %> (<%= productInfo.quentity %>)</p>
                         <form action="/cart-delete-item" method="post">
-                            <input type="hidden" value="<%= productInfo.product.id %>" name="productId">
+                            <input type="hidden" value="<%= productInfo._id %>" name="productId">
                             <button type="submit" class="btn">Delete</button>
                         </form>
                     </li>
                 <% }) %>
             </ul>
+            <hr>
+            <form action="/create-order" method="post" class="form-control">
+                <button type="submit" class="btn">Order</button>
+            </form>
         <% } else { %>
             <h1>No products in the cart</h1>
         <% } %>
